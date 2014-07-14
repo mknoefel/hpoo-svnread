@@ -41,13 +41,18 @@ public class SVNread {
 					"from a svn repository and make use of them " +
 					"(especialy with HP CSA).\n" +
 					"\nInputs:\n" +
-					"repository: url of the repository" +
-					"file: name of the file to fetch" +
+					"username: user to access repository with\n" +
+					"password: the password for the given user\n" +
+					"repository: url of the repository\n" +
+					"file: name of the file to fetch\n" +
 					"revision: input type is integer or \"HEAD\"; anything that can not be read defaults to HEAD\n" +
 					"\nOutputs:\n" +
 					"content: file content\n" +
-					"revision: the revision read (might differ from input revision, i.e. if input revision was -1 for HEAD)" +
-					"\n\n\n\nSource code is available at https://github.com/mknoefel/hpoo-svnread",
+					"revision: the revision read (might differ from input revision, i.e. if input revision was -1 for HEAD)\n" +
+					"attributes: file attributes\n" +
+					"            to filter for attributes please use scriplets, i.e. to filter the uuid:\n" +
+					"            var attr = JSON.parse(scriptletInput);\n" +
+					"            scriptletResult = attr[\"svn:entry:uuid\"];\n",
 			outputs = {
 				@Output("content"),
 				@Output("revision"),
@@ -63,7 +68,7 @@ public class SVNread {
 			@Param(value="username") String username,
 			@Param(value="password", encrypted=true) String password,
 			@Param(value="repository", required=true) String url,
-			@Param(value="file") String file,
+			@Param(value="file", required=true) String file,
 			@Param(value="revision") String Revision)
 	{
 		Map<String, String> resultMap = new HashMap<String, String>();
